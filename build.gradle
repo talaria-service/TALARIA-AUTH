@@ -1,7 +1,18 @@
+buildscript {
+	// 24.09.04 기준 최신 버전
+	ext {
+		protobufVersion = '4.27.4'
+		protobufPluginVersion = '0.9.4'
+		grpcVersion = '1.66.0'
+	}
+}
+
 plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.3.3'
 	id 'io.spring.dependency-management' version '1.1.6'
+	id 'com.diffplug.spotless' version '6.23.3'
+	id 'com.google.protobuf' version "${protobufPluginVersion}"
 }
 
 group = 'com.yonyk'
@@ -24,19 +35,117 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-security'
-	implementation 'org.springframework.boot:spring-boot-starter-validation'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	compileOnly 'org.projectlombok:lombok'
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
-	annotationProcessor 'org.projectlombok:lombok'
+	// spring boot
+	implementation 'org.springframework.boot:spring-boot-starter'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	// spring security
+	implementation 'org.springframework.boot:spring-boot-starter-security'
 	testImplementation 'org.springframework.security:spring-security-test'
+
+	// jpa
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+	// redis
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
+	// mariaDB
+	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+
+	// validation
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+	// web
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	// lombok
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+
+	// devtools
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+	//JWT 의존성
+	implementation 'io.jsonwebtoken:jjwt-api:0.12.3'
+	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.3'
+	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.3'
+
+
+	// grpc
+	implementation 'net.devh:grpc-spring-boot-starter:3.1.0.RELEASE'
+	implementation "io.grpc:grpc-netty-shaded:${grpcVersion}"
+	implementation "io.grpc:grpc-protobuf:${grpcVersion}"
+	implementation "io.grpc:grpc-stub:${grpcVersion}"
+
+	implementation "com.google.protobuf:protobuf-java-util:${protobufVersion}"
+	implementation "com.google.protobuf:protobuf-java:${protobufVersion}"
+	compileOnly 'org.apache.tomcat:annotations-api:6.0.53'
+
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+protobuf {
+	// Protobuf 컴파일러를 지정하여 .proto 파일을 컴파일합니다.
+	protoc {
+		artifact = "com.google.protobuf:protoc:${protobufVersion}"
+	}
+	// 생성된 파일을 정리합니다.
+	clean {
+		delete generatedFilesBaseDir
+	}
+	// gRPC 플러그인을 설정하여 Protobuf 파일로부터 gRPC 관련 코드를 생성합니다.
+	plugins {
+		grpc {
+			artifact = "io.grpc:protoc-gen-grpc-java:${grpcVersion}"
+		}
+	}
+	// 모든 프로토콜 버퍼 작업에 대해 gRPC 플러그인을 적용합니다.
+	generateProtoTasks {
+		all()*.plugins {
+			grpc {}
+		}
+	}
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+// compileJava 작업이 실행되기 전에 makeGitHooksExecutable 작업을 실행
+tasks.named("compileJava") {
+	dependsOn 'spotlessJava'
+	dependsOn 'makeGitHooksExecutable'
+}
+
+// Git hooks 업데이트 작업
+tasks.register('updateGitHooks', Copy) {
+	from 'script/pre-commit'
+	into '.git/hooks'
+}
+
+// makeGitHooksExecutable 작업을 OS에 따라 실행 여부 결정
+tasks.register('makeGitHooksExecutable', Exec) {
+	// Windows가 아닌 경우에만 실행
+	onlyIf { !System.properties['os.name'].toLowerCase().contains('windows') }
+
+	commandLine 'chmod', '+x', '.git/hooks/pre-commit'
+	dependsOn 'updateGitHooks'
+}
+
+ext.googleJavaFormatVersion = "1.18.1"
+
+spotless {
+	java {
+		googleJavaFormat("$googleJavaFormatVersion")
+		// 아래 순서로 import문 정렬
+		importOrder('java', 'javax', 'jakarta', 'org', 'com')
+		// 사용하지 않는 import 제거
+		removeUnusedImports()
+		// 각 라인 끝에 있는 공백을 제거
+		trimTrailingWhitespace()
+		// 파일 끝에 새로운 라인 추가
+		endWithNewline()
+		// 자동 생성된 파일 무시
+		targetExclude '**/generated/**/*.java'
+	}
 }
