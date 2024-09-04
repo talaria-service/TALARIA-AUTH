@@ -35,3 +35,10 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### application.properties ###
+*.properties
+
+### private, public key ###
+src/main/resources/private.key
+src/main/resources/public.key
