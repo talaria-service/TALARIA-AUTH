@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+// 여기에 내가 원하는 패키지명을 적는다. 아래는 예시이며 실제 프로젝트 패키지를 잘 보면서 수정하자.
+option java_package = "com.yonyk";
+option java_outer_classname = "Talaria_Auth";
+
+service HelloWorldService {
+  rpc hello(HelloRequest) returns (HelloResponse) {}
+}
+
+message HelloRequest {
+  string text = 1;
+}
+
+message HelloResponse {
+  string text = 1;
+}
