@@ -1,5 +1,7 @@
 package com.yonyk.talaria.auth.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
@@ -30,5 +32,13 @@ public class MemberController {
     // 실제 회원가입
     memberService.signUp(registerDTO);
     return ResponseEntity.ok("회원가입이 성공적으로 완료되었습니다.");
+  }
+
+  // 리프레시 토큰으로 엑세스 토큰, 리프레시 토큰 재발급
+  @PostMapping("/refresh-token")
+  public ResponseEntity<String> reissueRefreshToken(
+      HttpServletRequest request, HttpServletResponse response) {
+    memberService.reissueRefreshToken(request, response);
+    return ResponseEntity.ok("토큰 재발급이 성공적으로 완료되었습니다.");
   }
 }

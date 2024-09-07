@@ -119,7 +119,7 @@ public class SpringSecurityConfig {
                 authz
                     // 회원가입, 로그인, 액세스 토큰 재발급
                     .requestMatchers(
-                        "/api/members", "/api/members/login", "/api/members/refresh_token")
+                        "/api/members", "/api/members/login", "/api/members/refresh-token")
                     .permitAll()
                     // 이외 모든 요청 인증 필요
                     .anyRequest()
