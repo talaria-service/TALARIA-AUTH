@@ -1,5 +1,8 @@
 package com.yonyk.talaria.auth.service;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +19,7 @@ public class MemberService {
 
   private final MemberRepository memberRepository;
   private final BCryptPasswordEncoder bCryptPasswordEncoder;
+  private final JwtService jwtService;
 
   // 회원가입 정보 검증
   public void validMember(RegisterDTO registerDTO) {
@@ -33,5 +37,10 @@ public class MemberService {
   public void signUp(RegisterDTO registerDTO) {
     String password = bCryptPasswordEncoder.encode(registerDTO.password());
     memberRepository.save(registerDTO.toMember(password));
+  }
+
+  // 리프레시 토큰으로 액세스 토큰, 리프레시 토큰 재발급
+  public void reissueRefreshToken(HttpServletRequest request, HttpServletResponse response) {
+    jwtService.reissueRefreshToken(request, response);
   }
 }
