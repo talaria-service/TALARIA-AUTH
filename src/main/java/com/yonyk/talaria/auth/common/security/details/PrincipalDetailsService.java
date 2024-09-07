@@ -27,7 +27,7 @@ public class PrincipalDetailsService implements UserDetailsService {
             .orElseThrow(
                 () ->
                     new UsernameNotFoundException(
-                        SecurityExceptionType.USER_NOT_FOUND.getMessage()));
+                        SecurityExceptionType.MEMBER_NOT_FOUND.getMessage()));
     return new PrincipalDetails(member);
   }
 }
