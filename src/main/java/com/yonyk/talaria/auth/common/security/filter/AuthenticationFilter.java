@@ -23,7 +23,7 @@ import com.yonyk.talaria.auth.common.security.redis.RefreshToken;
 import com.yonyk.talaria.auth.common.security.redis.RefreshTokenRepository;
 import com.yonyk.talaria.auth.common.security.util.CookieProvider;
 import com.yonyk.talaria.auth.common.security.util.JwtProvider;
-import com.yonyk.talaria.auth.controller.dto.LoginDTO;
+import com.yonyk.talaria.auth.controller.request.LoginDTO;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
