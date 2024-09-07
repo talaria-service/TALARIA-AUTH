@@ -21,7 +21,7 @@ public class CustomGrpcAuthenticationReader implements GrpcAuthenticationReader 
   @Value("${jwt.access-token-header}")
   private String accessTokenHeader;
 
-  private JwtProvider jwtProvider;
+  private final JwtProvider jwtProvider;
 
   @Nullable
   @Override
