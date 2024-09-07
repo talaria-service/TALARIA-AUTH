@@ -7,7 +7,6 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
@@ -28,10 +27,6 @@ public class CustomLogoutHandler implements LogoutHandler {
   private final CookieProvider cookieProvider;
   private final RefreshTokenRepository refreshTokenRepository;
   private final SecurityExceptionHandler securityExceptionHandler;
-
-  // refreshToken 프리픽스
-  @Value("${spring.data.redis.prefix}")
-  String refreshTokenPrefix;
 
   public CustomLogoutHandler(
       CookieProvider cookieProvider,
@@ -66,8 +61,7 @@ public class CustomLogoutHandler implements LogoutHandler {
   // redis에서 refreshToken 삭제하는 메소드
   private void deleteRefreshTokenInRedis(Cookie findCookie) {
     // redis에서 refreshToken 찾기
-    Optional<RefreshToken> refreshToken =
-        refreshTokenRepository.findById(refreshTokenPrefix + findCookie.getValue());
+    Optional<RefreshToken> refreshToken = refreshTokenRepository.findById(findCookie.getValue());
     if (refreshToken.isPresent()) {
       // redis에서 refreshToken 삭제
       refreshTokenRepository.delete(refreshToken.get());

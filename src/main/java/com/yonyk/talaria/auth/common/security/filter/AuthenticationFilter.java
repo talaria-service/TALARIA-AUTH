@@ -8,7 +8,6 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -24,7 +23,7 @@ import com.yonyk.talaria.auth.common.security.redis.RefreshToken;
 import com.yonyk.talaria.auth.common.security.redis.RefreshTokenRepository;
 import com.yonyk.talaria.auth.common.security.util.CookieProvider;
 import com.yonyk.talaria.auth.common.security.util.JwtProvider;
-import com.yonyk.talaria.auth.controller.dto.LoginDTO;
+import com.yonyk.talaria.auth.controller.request.LoginDTO;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -41,10 +40,6 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
   private final RefreshTokenRepository refreshTokenRepository;
   // 예외 처리
   private final SecurityExceptionHandler securityExceptionHandler;
-
-  // refreshToken 프리픽스
-  @Value("${spring.data.redis.prefix}")
-  String refreshTokenPrefix;
 
   // 클래스 생성 완료 후 초기화
   @PostConstruct
@@ -102,7 +97,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
   private void storeRefreshToken(Authentication authResult, JwtRecord jwtRecord) {
     long memberId = ((PrincipalDetails) authResult.getPrincipal()).getMemberId();
     refreshTokenRepository.save(
-        new RefreshToken(refreshTokenPrefix + jwtRecord.refreshToken(), String.valueOf(memberId)));
+        new RefreshToken(jwtRecord.refreshToken(), String.valueOf(memberId)));
   }
 
   // 로그인 인증 실패시 실행되는 메소드

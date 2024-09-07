@@ -44,14 +44,7 @@ public class CustomExceptionHandler {
 
     if (bindingResult.hasErrors()) {
       for (FieldError fieldError : bindingResult.getFieldErrors()) {
-        builder
-            .append("[")
-            .append(fieldError.getField())
-            .append("](은)는 ")
-            .append(fieldError.getDefaultMessage())
-            .append(" 입력된 값: [")
-            .append(fieldError.getRejectedValue())
-            .append("] ");
+        builder.append(fieldError.getDefaultMessage()).append(" ");
       }
     }
 
