@@ -36,13 +36,12 @@ public class CustomServerInterceptor implements ServerInterceptor {
   }
 
   private <RespT> void handleException(ServerCall<RespT, ?> call, Exception e) {
-    log.error("예외처리 인터셉터 동작");
-
+    // 예외 종류에 따른 메세지 생성
     String message = securityExceptionHandler.getExceptionMessage(e);
+    // 상태코드
     Status status = Status.UNAUTHENTICATED.withDescription(message);
-
     // 예외 로그 기록
-    log.error("Exception: ", e);
+    log.error("accessToken 검증 예외 발생: ", e);
     // gRPC 호출 종료 및 상태 코드 반환
     call.close(status, new Metadata());
   }

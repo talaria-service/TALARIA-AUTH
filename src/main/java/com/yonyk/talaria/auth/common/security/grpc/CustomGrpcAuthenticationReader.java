@@ -33,7 +33,8 @@ public class CustomGrpcAuthenticationReader implements GrpcAuthenticationReader 
     try {
       return jwtProvider.getAuthentication(accessToken);
     } catch (Exception e) {
-      throw new AuthenticationException("예외", e) {};
+      log.error("accessToken 검증 예외발생", e);
+      throw new AuthenticationException("accessToken 검증 예외발생", e) {};
     }
   }
 }
