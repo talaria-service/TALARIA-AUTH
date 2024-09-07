@@ -2,13 +2,14 @@ package com.yonyk.talaria.auth.entity;
 
 import jakarta.persistence.*;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import com.yonyk.talaria.auth.entity.enums.MemberRole;
+
+import lombok.*;
 
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name = "members")
 public class Member extends BaseEntity {
@@ -25,4 +26,8 @@ public class Member extends BaseEntity {
 
   @Column(nullable = false)
   private String email;
+
+  @Enumerated(EnumType.STRING)
+  @Column(nullable = false)
+  private MemberRole memberRole;
 }

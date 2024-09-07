@@ -39,10 +39,9 @@ jwt:
   prefix: 'Bearer '
   access-token-header: Authorization
   refresh-token-header: AuthorizationRefresh
+  secret: ${SECRET_KEY}
   access-token-TTL: 300
   refresh-token-TTL: 259200
-  public-key-location: ${PUBLIC_KEY_PATH}
-  private-key-location: ${PRIVATE_KEY_PATH}
 
 cookie:
   refresh-token:
