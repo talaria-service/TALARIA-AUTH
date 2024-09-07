@@ -30,11 +30,6 @@ spring:
       port: 6379
       prefix: 'Refresh:'
 
-  excluded:
-    path-list:
-      /api/members/login,
-      /api/members/refresh_token
-
 jwt:
   prefix: 'Bearer '
   access-token-header: Authorization

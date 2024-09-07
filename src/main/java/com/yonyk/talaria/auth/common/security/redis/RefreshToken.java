@@ -15,5 +15,5 @@ import lombok.*;
 public class RefreshToken {
   @Id String refreshToken;
 
-  String memberId;
+  String memberName;
 }
