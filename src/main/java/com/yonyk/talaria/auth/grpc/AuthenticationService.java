@@ -10,7 +10,7 @@ import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
 
 @GrpcService
-public class AuthorizationService extends AuthorizationServiceGrpc.AuthorizationServiceImplBase {
+public class AuthenticationService extends AuthorizationServiceGrpc.AuthorizationServiceImplBase {
   @Override
   public void getAuthentication(
       AuthorizationProto.AuthRequest request,
