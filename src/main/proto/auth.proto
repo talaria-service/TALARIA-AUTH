@@ -1,9 +1,9 @@
 syntax = "proto3";
 
 option java_package = "com.yonyk.talaria.auth.grpc";
-option java_outer_classname = "AuthenticationProto";
+option java_outer_classname = "AuthorizationProto";
 
-service AuthenticationService {
+service AuthorizationService {
   rpc getAuthentication(AuthRequest) returns (AuthResponse) {}
 }
 
