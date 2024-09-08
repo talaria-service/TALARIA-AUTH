@@ -8,8 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class TestClient {
 
-  private AuthenticationClientInterceptor interceptor;
-
   public static void main(String[] args) {
 
     String accessTokenHeader = "Authorization";
@@ -34,11 +32,9 @@ public class TestClient {
     // 요청 생성
     AuthorizationProto.AuthRequest request = AuthorizationProto.AuthRequest.newBuilder().build();
 
-    // 요청 전송 및 응답 수신
-    AuthorizationProto.AuthResponse response = null;
-
     try {
-      response = stub.getAuthentication(request);
+      // 요청 전송 및 응답 수신
+      AuthorizationProto.AuthResponse response = stub.getAuthentication(request);
       System.out.println("이름: " + response.getMemberName());
       System.out.println("권한: " + response.getMemberRoleList());
     } catch (StatusRuntimeException e) {

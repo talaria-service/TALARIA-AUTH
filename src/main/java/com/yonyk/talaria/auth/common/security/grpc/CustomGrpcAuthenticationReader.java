@@ -30,10 +30,11 @@ public class CustomGrpcAuthenticationReader implements GrpcAuthenticationReader 
   @Override
   public Authentication readAuthentication(ServerCall<?, ?> call, Metadata headers)
       throws AuthenticationException {
-    // 클라이언트 헤더에서 accessToken 가져오기
-    String accessToken =
-        headers.get(Metadata.Key.of(accessTokenHeader, Metadata.ASCII_STRING_MARSHALLER));
+
     try {
+      // 클라이언트 헤더에서 accessToken 가져오기
+      String accessToken =
+          headers.get(Metadata.Key.of(accessTokenHeader, Metadata.ASCII_STRING_MARSHALLER));
       // accessToken 파싱
       Authentication authentication = jwtProvider.getAuthentication(accessToken);
       // 인증객체 SecurityContextHolder 등록
