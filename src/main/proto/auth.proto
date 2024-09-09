@@ -4,7 +4,7 @@ option java_package = "com.yonyk.talaria.auth.grpc";
 option java_outer_classname = "AuthorizationProto";
 
 service AuthorizationService {
-  rpc getAuthentication(AuthRequest) returns (AuthResponse) {}
+  rpc getAuthorization(AuthRequest) returns (AuthResponse) {}
 }
 
 message AuthRequest {

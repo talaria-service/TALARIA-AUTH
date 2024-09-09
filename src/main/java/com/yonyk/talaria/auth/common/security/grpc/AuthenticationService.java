@@ -1,4 +1,4 @@
-package com.yonyk.talaria.auth.grpc;
+package com.yonyk.talaria.auth.common.security.grpc;
 
 import java.util.List;
 
@@ -6,16 +6,16 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import com.yonyk.talaria.auth.grpc.AuthorizationProto.*;
+import com.yonyk.talaria.auth.grpc.AuthorizationServiceGrpc;
+
 import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
 
 @GrpcService
 public class AuthenticationService extends AuthorizationServiceGrpc.AuthorizationServiceImplBase {
   @Override
-  public void getAuthentication(
-      AuthorizationProto.AuthRequest request,
-      StreamObserver<AuthorizationProto.AuthResponse> responseObserver) {
-
+  public void getAuthorization(AuthRequest request, StreamObserver<AuthResponse> responseObserver) {
     // 스프링 시큐리티에 등록된 인증객체 가져오기
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
@@ -26,11 +26,8 @@ public class AuthenticationService extends AuthorizationServiceGrpc.Authorizatio
         authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList();
 
     // 응답 객체 생성 및 전송
-    AuthorizationProto.AuthResponse response =
-        AuthorizationProto.AuthResponse.newBuilder()
-            .setMemberName(memberName)
-            .addAllMemberRole(memberRoles)
-            .build();
+    AuthResponse response =
+        AuthResponse.newBuilder().setMemberName(memberName).addAllMemberRole(memberRoles).build();
 
     // 클라이언트에게 응답 전송
     responseObserver.onNext(response);
