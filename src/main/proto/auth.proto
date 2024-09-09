@@ -13,5 +13,6 @@ message AuthRequest {
 
 message AuthResponse {
   string memberName = 1;
-  repeated string memberRole = 2;
+  string email = 2;
+  repeated string memberRole = 3;
 }
