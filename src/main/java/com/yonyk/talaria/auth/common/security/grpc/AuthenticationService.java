@@ -6,6 +6,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import com.yonyk.talaria.auth.common.security.details.PrincipalDetails;
 import com.yonyk.talaria.auth.grpc.AuthorizationProto.*;
 import com.yonyk.talaria.auth.grpc.AuthorizationServiceGrpc;
 
@@ -25,10 +26,15 @@ public class AuthenticationService extends AuthorizationServiceGrpc.Authorizatio
     // 사용자 권한 가져오기
     List<String> memberRoles =
         authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList();
+    String email = ((PrincipalDetails) authentication.getPrincipal()).getEmail();
 
     // 응답 객체 생성 및 전송
     AuthResponse response =
-        AuthResponse.newBuilder().setMemberName(memberName).addAllMemberRole(memberRoles).build();
+        AuthResponse.newBuilder()
+            .setMemberName(memberName)
+            .addAllMemberRole(memberRoles)
+            .setEmail(email)
+            .build();
 
     // 클라이언트에게 응답 전송
     responseObserver.onNext(response);
