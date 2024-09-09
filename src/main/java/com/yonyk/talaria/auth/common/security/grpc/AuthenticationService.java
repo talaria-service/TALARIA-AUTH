@@ -15,7 +15,8 @@ import net.devh.boot.grpc.server.service.GrpcService;
 @GrpcService
 public class AuthenticationService extends AuthorizationServiceGrpc.AuthorizationServiceImplBase {
   @Override
-  public void getAuthorization(AuthRequest request, StreamObserver<AuthResponse> responseObserver) {
+  public void getAuthentication(
+      AuthRequest request, StreamObserver<AuthResponse> responseObserver) {
     // 스프링 시큐리티에 등록된 인증객체 가져오기
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
