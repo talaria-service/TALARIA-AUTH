@@ -173,7 +173,7 @@
 
 <details>
 <summary><strong>ERD</strong></summary>
-<img src=https://github.com/user-attachments/assets/a59d05af-7046-4562-8d50-9eb0cceafe21>
+<img src=https://github.com/user-attachments/assets/40885a58-7c7b-4dee-a54e-5226e96301f7>
 </details>
 
 <details>
