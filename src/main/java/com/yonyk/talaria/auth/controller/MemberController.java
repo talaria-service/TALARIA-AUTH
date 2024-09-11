@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.yonyk.talaria.auth.common.swagger.MemberControllerSwagger;
 import com.yonyk.talaria.auth.controller.request.RegisterDTO;
 import com.yonyk.talaria.auth.service.MemberService;
 
@@ -20,7 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/members")
-public class MemberController {
+public class MemberController implements MemberControllerSwagger {
 
   private final MemberService memberService;
 
