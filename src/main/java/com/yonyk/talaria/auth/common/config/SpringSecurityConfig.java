@@ -117,6 +117,7 @@ public class SpringSecurityConfig {
         .authorizeHttpRequests(
             authz ->
                 authz
+                    // Swagger 설정
                     .requestMatchers("/v3/**", "/swagger-ui/**")
                     .permitAll()
                     // 회원가입, 로그인, 액세스 토큰 재발급

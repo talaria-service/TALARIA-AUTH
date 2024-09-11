@@ -18,7 +18,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @Tag(name = "Member", description = "사용자 관련 API입니다.")
 public interface MemberControllerSwagger {
 
-  @Operation(summary = "회원가입", description = "사용자 회원가입 때 사용되는 API")
+  @Operation(
+      summary = "회원가입",
+      description = "계정명, 비밀번호, 이메일을 받아서 회원가입을 하는 API 입니다. 각 항목별로 제약조건이 있습니다.")
   @ApiResponses(
       value = {
         @ApiResponse(
@@ -34,7 +36,7 @@ public interface MemberControllerSwagger {
 
   @Operation(
       summary = "refreshToken 재발급",
-      description = "refreshToken으로 accessToken, refreshToken 재발급하는 API")
+      description = "쿠키에 담긴 refreshToken으로 accessToken, refreshToken을 재발급하는 API입니다.")
   @ApiResponses(
       value = {
         @ApiResponse(
