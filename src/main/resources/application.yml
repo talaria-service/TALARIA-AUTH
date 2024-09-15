@@ -26,7 +26,7 @@ spring:
 
   data:
     redis:
-      host: localhost
+      host: ${REDIS_HOST}
       port: 6379
 
 jwt:
@@ -41,5 +41,5 @@ cookie:
     cookie-name: Refresh
     limit-time: 259200
     accepted-url: /api/members/refresh_token
-    domain: localhost
+    domain: ${COOKIE_DOMAIN}
     http-only: true
