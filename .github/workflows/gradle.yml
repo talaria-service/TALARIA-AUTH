@@ -65,5 +65,5 @@ jobs:
           docker pull ${{ secrets.DOCKER_USERNAME }}/talaria-auth:latest
           docker stop $(docker ps -q --filter 'name=talaria-auth')
           docker rm $(docker ps -a -q --filter 'name=talaria-auth' )
-          docker run -d --log-driver=syslog -p 8083:8888 --name talaria-auth --network yonyk-network ${{ secrets.DOCKER_USERNAME }}/talaria-auth:latest 
+          docker run -d --log-driver=syslog -p 8888:8888 --name talaria-auth --network yonyk-network ${{ secrets.DOCKER_USERNAME }}/talaria-auth:latest 
           docker image prune -a -f
