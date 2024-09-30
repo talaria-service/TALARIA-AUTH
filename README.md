@@ -14,6 +14,7 @@
 ### [4. 기능 구현](#4-기능-구현)
  - [⭐ 사용자 인증 시스템](#-사용자-인증-시스템)
  - [⭐ gRPC 통신을 이용한 JWT 인가 시스템](#-grpc-통신을-이용한-jwt-인가-시스템)
+ - [⭐ 배포](#-배포)
 ### [5. 트러블 슈팅](#5-트러블-슈팅)
 
 ## Quick Start
@@ -36,8 +37,8 @@
 ### ⚙️ 기술 스택
 ![java](https://img.shields.io/badge/Java-17-blue?logo=java)
 ![spring-boot](https://img.shields.io/badge/SpringBoot-3.3.3-6DB33F?logo=springboot)
-![redis](https://img.shields.io/badge/Redis-7.4.0-FF4438)
-![gRPC](https://img.shields.io/badge/gRPC-1.66.0-254c5b)
+![redis](https://img.shields.io/badge/Redis-7.4.0-FF4438?logo=redis)
+![gRPC](https://img.shields.io/badge/gRPC-1.66.0-254c5b?logo=gRPC)
 
 ### ✔️ 요구사항
 
@@ -380,6 +381,32 @@
     <summary>구현 코드</summary>
     <div>
         <a href="https://github.com/yony-k/TALARIA-AUTH/tree/dev/src/main/java/com/yonyk/talaria/auth/common/security/grpc" target="_blank">gRPC 패키지</a></br>
+    </div>
+</details>
+
+---
+
+### ⭐ 배포
+
+- Github Actiton을 사용한 CI/CD 자동화
+- Docker를 이용한 Build
+- AWS EC2 서버 배포
+
+<details>
+    <summary>구현 의도</summary>
+    <div>
+        <div><strong>Github Actiton</strong></div>
+        <div>프로젝트에 수정사항이 생길 때마다 직접 파일을 만들어 배포하는 방식은 비효율적이라는 생각이 들어 CI/CD 과정을 자동화하고자 했습니다. CI/CD에 사용되는 툴 중 비교적 사용방법이 간단한 Github Actiton을 선택했습니다.</div></br>
+        <strong>Docker</strong></div>
+        <div>운영체제에 구애받지 않고 어플리케이션을 실행시킬 수 있도록 Docker를 사용하였습니다.</div></br>
+        <strong>AWS EC2 서버</strong></div>
+        <div>AWS는 현재까지도 클라우드 이용 비중 순위에서 상위권에 위치해있기 때문에 실무에서 반드시 한번은 다뤄볼 일이 생길 것 같아 AWS를 선택했습니다.</div></br>
+    </div>
+</details>
+<details>
+    <summary>구현 코드</summary>
+    <div>
+        <a href="https://github.com/talaria-service/TALARIA-AUTH/blob/dev/.github/workflows/deploy.yml" target="_blank">배포 워크플로우</a></br>
     </div>
 </details>
 
